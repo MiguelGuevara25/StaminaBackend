@@ -1,3 +1,3 @@
 FROM amazoncorretto:23-al2023-jdk
-COPY target/taskFlow-0.0.1-SNAPSHOT.jar /api-v1.jar
+COPY target/staminaBackend-0.0.1-SNAPSHOT.jar /api-v1.jar
 ENTRYPOINT ["java", "-jar", "/api-v1.jar"]
