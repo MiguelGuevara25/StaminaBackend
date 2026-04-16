@@ -38,13 +38,14 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        // Permite el origen de tu frontend de Vite
-        configuration.setAllowedOrigins(Arrays.asList("*"));
-        // Permite los métodos que vas a usar
+        // 1. Permite TODOS los orígenes
+        configuration.setAllowedOriginPatterns(Arrays.asList("*"));
+        // 2. Permite todos los métodos comunes
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        // Permite todos los encabezados (importante para Authorization)
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
-        // Permite enviar credenciales si fuera necesario
+        // 3. Permite todas las cabeceras
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        // OJO: Si usas "*" en AllowedOrigins, NO puedes poner setAllowCredentials(true)
+        // por seguridad del navegador. Si lo necesitas, usa AllowedOriginPatterns.
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
