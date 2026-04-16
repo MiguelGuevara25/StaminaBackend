@@ -7,16 +7,25 @@ import tech.encode.staminabackend.entity.Role;
 import tech.encode.staminabackend.entity.User;
 import tech.encode.staminabackend.repository.IRoleRepository;
 import tech.encode.staminabackend.repository.IUserRepository;
+import tech.encode.staminabackend.security.JwtUtil;
 import tech.encode.staminabackend.service.IUserService;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class UserServiceImplement implements IUserService {
     private final IUserRepository userRepository;
     private final IRoleRepository roleRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+
+    public UserServiceImplement(IUserRepository userRepository,
+                                IRoleRepository roleRepository,
+                                BCryptPasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public List<User> findAll() {

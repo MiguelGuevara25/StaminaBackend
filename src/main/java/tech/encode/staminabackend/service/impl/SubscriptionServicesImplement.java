@@ -1,6 +1,7 @@
 package tech.encode.staminabackend.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import tech.encode.staminabackend.entity.Attendance;
 import tech.encode.staminabackend.entity.Plan;
@@ -10,6 +11,7 @@ import tech.encode.staminabackend.repository.IAttendanceRepository;
 import tech.encode.staminabackend.repository.IPlanRepository;
 import tech.encode.staminabackend.repository.ISubscriptionRepository;
 import tech.encode.staminabackend.repository.IUserRepository;
+import tech.encode.staminabackend.security.JwtUtil;
 import tech.encode.staminabackend.service.ISubscriptionService;
 
 import java.time.LocalDate;
@@ -17,12 +19,22 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class SubscriptionServicesImplement implements ISubscriptionService {
     private final ISubscriptionRepository subscriptionRepository;
     private final IAttendanceRepository attendanceRepository;
     private final IUserRepository userRepository;
     private final IPlanRepository planRepository;
+
+    public SubscriptionServicesImplement(ISubscriptionRepository subscriptionRepository,
+                                         IAttendanceRepository attendanceRepository,
+                                         IUserRepository userRepository,
+                                         IPlanRepository planRepository) {
+        this.subscriptionRepository = subscriptionRepository;
+        this.attendanceRepository = attendanceRepository;
+        this.userRepository = userRepository;
+        this.planRepository = planRepository;
+    }
 
     @Override
     public List<Subscription> findAll() {

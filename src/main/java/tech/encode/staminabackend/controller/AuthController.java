@@ -9,10 +9,14 @@ import tech.encode.staminabackend.service.IAuthService;
 
 @RestController
 @RequestMapping("/auth")
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @CrossOrigin("*")
 public class AuthController {
     private final IAuthService authService;
+
+    public AuthController(IAuthService authService) {
+        this.authService = authService;
+    }
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO loginRequest) {

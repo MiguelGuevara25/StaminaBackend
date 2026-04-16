@@ -9,9 +9,13 @@ import tech.encode.staminabackend.service.IPlanService;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class PlanServiceImplement implements IPlanService {
     private final IPlanRepository planRepository;
+
+    public PlanServiceImplement(IPlanRepository planRepository) {
+        this.planRepository = planRepository;
+    }
 
     @Override
     public List<Plan> findAll() {

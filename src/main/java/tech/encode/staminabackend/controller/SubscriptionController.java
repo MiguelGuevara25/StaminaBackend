@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.encode.staminabackend.dtos.SubscriptionDTO;
 import tech.encode.staminabackend.entity.Subscription;
+import tech.encode.staminabackend.service.IPlanService;
 import tech.encode.staminabackend.service.ISubscriptionService;
 
 import java.util.List;
@@ -15,10 +16,15 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/subscriptions")
 @CrossOrigin("*")
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class SubscriptionController {
     private final ISubscriptionService subscriptionService;
     private final ModelMapper modelMapper;
+
+    public SubscriptionController(ISubscriptionService subscriptionService, ModelMapper modelMapper) {
+        this.subscriptionService = subscriptionService;
+        this.modelMapper = modelMapper;
+    }
 
     @GetMapping
     public ResponseEntity<List<SubscriptionDTO>> getAll() {

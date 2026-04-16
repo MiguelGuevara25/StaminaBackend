@@ -16,11 +16,19 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class AuthServiceImplement implements IAuthService {
     private final IUserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
+
+    public AuthServiceImplement(IUserRepository userRepository,
+                                BCryptPasswordEncoder passwordEncoder,
+                                JwtUtil jwtUtil) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtUtil = jwtUtil;
+    }
 
     @Override
     public LoginResponseDTO login(LoginRequestDTO loginRequest) {
