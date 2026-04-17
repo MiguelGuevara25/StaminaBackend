@@ -15,15 +15,10 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/plans")
 @CrossOrigin("*")
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 public class PlanController {
     private final IPlanService planService;
     private final ModelMapper modelMapper;
-
-    public PlanController(IPlanService planService, ModelMapper modelMapper) {
-        this.planService = planService;
-        this.modelMapper = modelMapper;
-    }
 
     @GetMapping
     public ResponseEntity<List<PlanDTO>> getAll() {

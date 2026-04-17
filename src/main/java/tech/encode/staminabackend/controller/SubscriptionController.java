@@ -16,15 +16,10 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/subscriptions")
 @CrossOrigin("*")
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 public class SubscriptionController {
     private final ISubscriptionService subscriptionService;
     private final ModelMapper modelMapper;
-
-    public SubscriptionController(ISubscriptionService subscriptionService, ModelMapper modelMapper) {
-        this.subscriptionService = subscriptionService;
-        this.modelMapper = modelMapper;
-    }
 
     @GetMapping
     public ResponseEntity<List<SubscriptionDTO>> getAll() {

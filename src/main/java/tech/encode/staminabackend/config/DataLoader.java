@@ -9,13 +9,9 @@ import tech.encode.staminabackend.repository.IRoleRepository;
 import java.util.Optional;
 
 @Component
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 public class DataLoader implements CommandLineRunner {
     private final IRoleRepository roleRepository;
-
-    public DataLoader(IRoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
-    }
 
     @Override
     public void run(String... args) throws Exception {

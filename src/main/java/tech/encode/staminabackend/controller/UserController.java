@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.encode.staminabackend.dtos.UserDTO;
 import tech.encode.staminabackend.entity.User;
-import tech.encode.staminabackend.service.IPlanService;
 import tech.encode.staminabackend.service.IUserService;
 
 import java.util.List;
@@ -16,15 +15,10 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/users")
 @CrossOrigin("*")
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 public class UserController {
     private final IUserService userService;
     private final ModelMapper modelMapper;
-
-    public UserController(IUserService userService, ModelMapper modelMapper) {
-        this.userService = userService;
-        this.modelMapper = modelMapper;
-    }
 
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAll() {

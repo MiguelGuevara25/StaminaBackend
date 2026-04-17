@@ -1,8 +1,10 @@
 package tech.encode.staminabackend.dtos;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class SubscriptionRequestDTO {
     private Long userId;
     private Long planId;
