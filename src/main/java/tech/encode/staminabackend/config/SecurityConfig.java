@@ -55,9 +55,18 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .exceptionHandling(ex -> ex.authenticationEntryPoint((request, response, authException) -> {
-                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Error: No autorizado. Debes iniciar sesión.");
-                }))
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                            response.setContentType("application/json");
+                            response.getWriter().write("{\"error\": \"No autorizado. Debes iniciar sesión.\", \"status\": 401}");
+                        })
+                        .accessDeniedHandler((request, response, accessDeniedException) -> {
+                            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                            response.setContentType("application/json");
+                            response.getWriter().write("{\"error\": \"Acceso denegado. No tienes permisos suficientes.\", \"status\": 403}");
+                        })
+                )
                 .authorizeHttpRequests(auth -> auth
                         // 1. ZONA PÚBLICA: Login y Registro
                         .requestMatchers("/auth/**").permitAll()
@@ -69,7 +78,7 @@ public class SecurityConfig {
                         // El GET es para todos (USER y ADMIN) para que puedan ver qué comprar
                         .requestMatchers(HttpMethod.GET, "/api/plans", "/api/plans/**").hasAnyRole("USER", "ADMIN")
                         // POST, PUT y DELETE solo para el que manda en el gym
-                        .requestMatchers(HttpMethod.POST, "/api/plans/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/plans", "/api/plans/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/plans/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/plans/**").hasRole("ADMIN")
 

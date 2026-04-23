@@ -56,7 +56,8 @@ public class SubscriptionServicesImplement implements ISubscriptionService {
         List<Subscription> subscriptions = subscriptionRepository.findByUserDni(dni);
 
         if (subscriptions.isEmpty()) {
-            return "DENEGADO: El socio no tiene ninguna suscripción registrada.";
+            // En lugar de return String, lanzamos excepción para que el Handler responda 400
+            throw new RuntimeException("DENEGADO: El socio no tiene ninguna suscripción registrada.");
         }
 
         LocalDate today = LocalDate.now();
@@ -64,16 +65,16 @@ public class SubscriptionServicesImplement implements ISubscriptionService {
                 .anyMatch(s -> (s.getEndDate().isAfter(today) || s.getEndDate().isEqual(today))
                         && s.getStatus().equals("ACTIVE"));
 
-        if (isValid) {
-            // ¡AQUÍ ESTÁ EL TRUCO!
-            // Si el acceso es concedido, guardamos la asistencia antes de responder
-            Attendance attendance = new Attendance();
-            attendance.setUser(user);
-            attendance.setEntryDate(LocalDateTime.now());
-            attendanceRepository.save(attendance);
-            return "CONCEDIDO: Bienvenido " + user.getFirstName() + " " + user.getLastName();
-        } else {
-            return "DENEGADO: Membresía vencida.";
+        if (!isValid) {
+            throw new RuntimeException("DENEGADO: Membresía vencida o inactiva.");
         }
+
+        // 3. Si llegó aquí, todo está bien. Guardamos asistencia.
+        Attendance attendance = new Attendance();
+        attendance.setUser(user);
+        attendance.setEntryDate(LocalDateTime.now());
+        attendanceRepository.save(attendance);
+
+        return "CONCEDIDO: Bienvenido " + user.getFirstName() + " " + user.getLastName();
     }
 }

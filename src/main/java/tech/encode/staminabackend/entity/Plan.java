@@ -3,6 +3,8 @@ package tech.encode.staminabackend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "plans")
 @Getter
@@ -21,5 +23,8 @@ public class Plan {
     private Integer durationDays; // Ejemplo: 30, 90, 365
 
     @Column(nullable = false)
-    private Double price;
+    private BigDecimal price;
+
+    @Column(length = 255)
+    private String description;
 }

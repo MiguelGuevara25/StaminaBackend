@@ -3,8 +3,11 @@ package tech.encode.staminabackend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -45,4 +48,16 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private List<Subscription> subscriptions = new ArrayList<>();
+
+    @Transient
+    public String getStatus() {
+        if (subscriptions == null || subscriptions.isEmpty()) return "INACTIVO";
+        return subscriptions.stream()
+                .anyMatch(s -> !s.getEndDate().isBefore(LocalDate.now()))
+                ? "ACTIVO"
+                : "INACTIVO";
+    }
 }
