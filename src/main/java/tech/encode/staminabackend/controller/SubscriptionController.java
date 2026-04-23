@@ -46,4 +46,10 @@ public class SubscriptionController {
         String message = subscriptionService.checkAccess(dni);
         return ResponseEntity.ok(message);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        subscriptionService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }

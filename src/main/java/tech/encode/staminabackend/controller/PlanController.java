@@ -6,7 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.encode.staminabackend.dtos.PlanDTO;
+import tech.encode.staminabackend.dtos.UserDTO;
 import tech.encode.staminabackend.entity.Plan;
+import tech.encode.staminabackend.entity.User;
 import tech.encode.staminabackend.service.IPlanService;
 
 import java.util.List;
@@ -38,5 +40,20 @@ public class PlanController {
         PlanDTO responseDTO = modelMapper.map(savedPlan, PlanDTO.class);
 
         return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PlanDTO> update(@PathVariable Long id, @RequestBody PlanDTO planDTO) {
+        Plan planDetails = modelMapper.map(planDTO, Plan.class);
+        Plan updatedUser = planService.update(id, planDetails);
+        PlanDTO responseDTO = modelMapper.map(updatedUser, PlanDTO.class);
+
+        return ResponseEntity.ok(responseDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        planService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

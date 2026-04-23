@@ -22,4 +22,22 @@ public class PlanServiceImplement implements IPlanService {
     public Plan save(Plan plan) {
         return planRepository.save(plan);
     }
+
+    @Override
+    public Plan update(Long id, Plan planDetails) {
+        Plan plan = planRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("No se encontró el plan con ID: " + id));
+
+        plan.setName(planDetails.getName());
+        plan.setDurationDays(planDetails.getDurationDays());
+        plan.setPrice(planDetails.getPrice());
+        plan.setDescription(planDetails.getDescription());
+
+        return planRepository.save(plan);
+    }
+
+    @Override
+    public void delete(Long id) {
+        planRepository.deleteById(id);
+    }
 }

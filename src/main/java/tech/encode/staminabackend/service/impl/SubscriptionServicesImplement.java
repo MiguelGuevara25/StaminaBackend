@@ -77,4 +77,9 @@ public class SubscriptionServicesImplement implements ISubscriptionService {
 
         return "CONCEDIDO: Bienvenido " + user.getFirstName() + " " + user.getLastName();
     }
+
+    @Override
+    public void delete(Long id) {
+        subscriptionRepository.deleteById(id);
+    }
 }

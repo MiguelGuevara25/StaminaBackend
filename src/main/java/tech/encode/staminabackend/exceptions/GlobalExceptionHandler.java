@@ -12,10 +12,14 @@ public class GlobalExceptionHandler {
     // Este método atrapa específicamente los RuntimeException que lanzamos en los services
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorResponse> handleRuntime(RuntimeException ex) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
 
-        HttpStatus status = ex.getMessage().toLowerCase().contains("no se encontró")
-                ? HttpStatus.NOT_FOUND
-                : HttpStatus.BAD_REQUEST;
+        if (ex.getMessage().toLowerCase().contains("no se encontró")) {
+            status = HttpStatus.NOT_FOUND;
+        } else if (ex.getMessage().toLowerCase().contains("ya está registrado") ||
+                ex.getMessage().toLowerCase().contains("ya está en uso")) {
+            status = HttpStatus.CONFLICT;
+        }
 
         ErrorResponse error = new ErrorResponse(
                 ex.getMessage(),
@@ -23,7 +27,7 @@ public class GlobalExceptionHandler {
                 System.currentTimeMillis()
         );
 
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(error, status);
     }
 
     // 2. Atrapa errores de permisos (Cuando un USER quiere hacer cosas de ADMIN)
