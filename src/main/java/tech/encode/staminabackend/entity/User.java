@@ -38,6 +38,9 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    private Boolean active = true;
+
     @Column(updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
@@ -51,6 +54,8 @@ public class User {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Subscription> subscriptions = new ArrayList<>();
+
+
 
     @Transient
     public String getStatus() {

@@ -41,6 +41,12 @@ public class AuthServiceImplement implements IAuthService {
         String realToken = jwtUtil.generateToken(user.getEmail(), rolesList);
 
         // 3. Devolvemos la respuesta
-        return new LoginResponseDTO(realToken, user.getEmail(), Set.copyOf(rolesList));
+        return new LoginResponseDTO(
+                realToken,
+                user.getEmail(),
+                user.getFirstName(),
+                user.getLastName(),
+                Set.copyOf(rolesList)
+        );
     }
 }

@@ -39,6 +39,15 @@ public class UserController {
         return ResponseEntity.ok(responseDTO);
     }
 
+    @GetMapping("/audit")
+    public ResponseEntity<List<UserDTO>> getAllForAudit() {
+        List<User> users = userService.findAllIncluding();
+        List<UserDTO> usersDto = users.stream()
+                .map(user -> modelMapper.map(user, UserDTO.class))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(usersDto);
+    }
+
     @PostMapping
     public ResponseEntity<UserDTO> save(@RequestBody UserDTO userDTO) {
         User user = modelMapper.map(userDTO, User.class);
@@ -58,8 +67,8 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        userService.delete(id);
+    public ResponseEntity<Void> desactivate(@PathVariable Long id) {
+        userService.desactivate(id);
         return ResponseEntity.noContent().build();
     }
 }

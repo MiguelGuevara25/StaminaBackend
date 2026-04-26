@@ -20,6 +20,11 @@ public class UserServiceImplement implements IUserService {
 
     @Override
     public List<User> findAll() {
+        return userRepository.findByActiveTrue();
+    }
+
+    @Override
+    public List<User> findAllIncluding() {
         return userRepository.findAll();
     }
 
@@ -99,5 +104,14 @@ public class UserServiceImplement implements IUserService {
     @Override
     public void delete(Long id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public void desactivate(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("No se encontró al socio con ID: " + id));
+
+        user.setActive(false);
+        userRepository.save(user);
     }
 }

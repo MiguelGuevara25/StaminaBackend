@@ -16,6 +16,7 @@ public class UserDTO {
     private String lastName;
     private String email;
     private String phone;
+    private Boolean active;
     private String status;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

@@ -81,6 +81,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/plans", "/api/plans/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/plans/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/plans/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/users/audit").hasRole("ADMIN")
 
                         // 3. ZONA DE USUARIOS:
                         // Solo el Admin debería poder ver la lista de todos los socios

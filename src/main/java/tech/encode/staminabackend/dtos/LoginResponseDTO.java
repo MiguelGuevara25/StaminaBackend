@@ -10,5 +10,7 @@ import java.util.Set;
 public class LoginResponseDTO {
     private String token;
     private String email;
+    private String firstName;
+    private String lastName;
     private Set<String> roles;
 }

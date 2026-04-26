@@ -10,4 +10,5 @@ public class PlanDTO {
     private String name; // Ejemplo: "Mensual", "Anual"
     private Integer durationDays; // Ejemplo: 30, 90, 365
     private Double price;
+    private String description;
 }
