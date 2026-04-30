@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ISubscriptionRepository extends JpaRepository<Subscription, Long> {
     List<Subscription> findByUserDni(String dni);
+    List<Subscription> findByStatus(String status);
 }

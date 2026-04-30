@@ -82,4 +82,12 @@ public class SubscriptionServicesImplement implements ISubscriptionService {
     public void delete(Long id) {
         subscriptionRepository.deleteById(id);
     }
+
+    @Override
+    public void cancel(Long id) {
+        Subscription subscription = subscriptionRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Suscripción no encontrada con ID: " + id));
+        subscription.setStatus("CANCELLED");
+        subscriptionRepository.save(subscription);
+    }
 }

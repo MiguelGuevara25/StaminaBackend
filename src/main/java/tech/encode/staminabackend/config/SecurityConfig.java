@@ -37,7 +37,7 @@ public class SecurityConfig {
         // 1. Permite TODOS los orígenes
         configuration.setAllowedOriginPatterns(Arrays.asList("*"));
         // 2. Permite todos los métodos comunes
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         // 3. Permite todas las cabeceras
         configuration.setAllowedHeaders(Arrays.asList("*"));
         // OJO: Si usas "*" en AllowedOrigins, NO puedes poner setAllowCredentials(true)
@@ -81,6 +81,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/plans", "/api/plans/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/plans/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/plans/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH, "/api/plans/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/users/audit").hasRole("ADMIN")
 
                         // 3. ZONA DE USUARIOS:

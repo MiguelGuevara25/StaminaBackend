@@ -9,4 +9,5 @@ public interface ISubscriptionService {
     Subscription save(Subscription subscription);
     String checkAccess(String dni);
     void delete(Long id);
+    void cancel(Long id);
 }

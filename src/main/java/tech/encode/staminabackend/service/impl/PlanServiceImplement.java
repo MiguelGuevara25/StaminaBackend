@@ -15,6 +15,11 @@ public class PlanServiceImplement implements IPlanService {
 
     @Override
     public List<Plan> findAll() {
+        return planRepository.findByActiveTrue();
+    }
+
+    @Override
+    public List<Plan> findAllIncluding() {
         return planRepository.findAll();
     }
 
@@ -39,5 +44,14 @@ public class PlanServiceImplement implements IPlanService {
     @Override
     public void delete(Long id) {
         planRepository.deleteById(id);
+    }
+
+    @Override
+    public void desactivate(Long id) {
+        Plan plan = planRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("No se encontró el plan con ID: " + id));
+
+        plan.setActive(false);
+        planRepository.save(plan);
     }
 }

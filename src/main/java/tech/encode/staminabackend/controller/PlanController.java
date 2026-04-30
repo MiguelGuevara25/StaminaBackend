@@ -6,9 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.encode.staminabackend.dtos.PlanDTO;
-import tech.encode.staminabackend.dtos.UserDTO;
 import tech.encode.staminabackend.entity.Plan;
-import tech.encode.staminabackend.entity.User;
 import tech.encode.staminabackend.service.IPlanService;
 
 import java.util.List;
@@ -33,6 +31,15 @@ public class PlanController {
         return ResponseEntity.ok(plansDto);
     }
 
+    @GetMapping("/audit")
+    public ResponseEntity<List<PlanDTO>> getAllForAudit() {
+        List<Plan> plans = planService.findAllIncluding();
+        List<PlanDTO> plansDto = plans.stream()
+                .map(plan -> modelMapper.map(plan, PlanDTO.class))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(plansDto);
+    }
+
     @PostMapping
     public ResponseEntity<PlanDTO> save(@RequestBody PlanDTO planDTO) {
         Plan plan = modelMapper.map(planDTO, Plan.class);
@@ -53,7 +60,7 @@ public class PlanController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        planService.delete(id);
+        planService.desactivate(id);
         return ResponseEntity.noContent().build();
     }
 }

@@ -27,4 +27,7 @@ public class Plan {
 
     @Column(length = 255)
     private String description;
+
+    @Column(nullable = false)
+    private Boolean active = true;
 }

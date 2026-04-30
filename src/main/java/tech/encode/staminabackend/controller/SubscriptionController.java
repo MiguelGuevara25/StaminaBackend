@@ -44,7 +44,14 @@ public class SubscriptionController {
     @GetMapping("/check/{dni}")
     public ResponseEntity<String> checkAccess(@PathVariable String dni) {
         String message = subscriptionService.checkAccess(dni);
+
         return ResponseEntity.ok(message);
+    }
+
+    @PatchMapping("/{id}/cancel")
+    public ResponseEntity<Void> cancel(@PathVariable Long id) {
+        subscriptionService.cancel(id);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
